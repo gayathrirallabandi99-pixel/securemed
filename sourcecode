@@ -1,0 +1,2924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SecureMed - Stage 7</title>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+/* LOGIN */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #0f172a, #1d4ed8);
+}
+
+.login-box {
+    width: 400px;
+    background: white;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.25);
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo h1 {
+    color: #2563eb;
+    font-size: 32px;
+}
+
+.logo p {
+    color: #64748b;
+    margin-top: 5px;
+}
+
+.login-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 12px 0 6px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #2563eb;
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.primary-btn,
+.action-btn {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 18px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.primary-btn {
+    width: 100%;
+    background: #2563eb;
+    color: white;
+    margin-top: 20px;
+}
+
+.primary-btn:hover,
+.action-btn:hover {
+    background: #1d4ed8;
+}
+
+.action-btn {
+    background: #2563eb;
+    color: white;
+}
+
+.danger-btn {
+    background: #dc2626;
+}
+
+.danger-btn:hover {
+    background: #b91c1c;
+}
+
+.secondary-btn {
+    background: #475569;
+    color: white;
+}
+
+.secondary-btn:hover {
+    background: #334155;
+}
+
+/* APPLICATION */
+
+.app {
+    display: none;
+    min-height: 100vh;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 240px;
+    background: #0f172a;
+    color: white;
+    padding: 25px 18px;
+}
+
+.sidebar-logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 35px;
+    padding-left: 10px;
+}
+
+.sidebar-logo span {
+    color: #60a5fa;
+}
+
+.nav-item {
+    padding: 13px;
+    margin: 7px 0;
+    border-radius: 8px;
+    color: #cbd5e1;
+}
+
+.nav-item.active,
+.nav-item:hover {
+    background: #1e40af;
+    color: white;
+}
+
+.logout {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 25px;
+    background: #dc2626;
+    padding: 12px;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.main {
+    margin-left: 240px;
+    padding: 30px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.topbar h1 {
+    font-size: 28px;
+}
+
+.topbar p {
+    color: #64748b;
+    margin-top: 5px;
+}
+
+.user-badge {
+    background: white;
+    padding: 10px 18px;
+    border-radius: 20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+    font-weight: bold;
+}
+
+/* STATS */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 5px 18px rgba(0,0,0,.06);
+}
+
+.stat-card h4 {
+    color: #64748b;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.number {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.blue { color: #2563eb; }
+.green { color: #16a34a; }
+.orange { color: #ea580c; }
+.red { color: #dc2626; }
+.purple { color: #7c3aed; }
+
+/* CARDS */
+
+.grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 22px;
+}
+
+.card {
+    background: white;
+    padding: 23px;
+    border-radius: 14px;
+    box-shadow: 0 5px 18px rgba(0,0,0,.06);
+    margin-bottom: 22px;
+}
+
+.card h2 {
+    font-size: 19px;
+    margin-bottom: 17px;
+}
+
+/* SECURITY */
+
+.security-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 12px;
+}
+
+.security-item {
+    background: #f8fafc;
+    padding: 14px;
+    border-radius: 10px;
+    border-left: 4px solid #2563eb;
+}
+
+.security-item strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.security-item span {
+    color: #64748b;
+    font-size: 12px;
+}
+
+/* RECORD */
+
+.record-box {
+    background: #f8fafc;
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    margin-top: 12px;
+}
+
+.record-box p {
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.record-box strong {
+    color: #334155;
+}
+
+/* STATUS */
+
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.status.shared {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status.revoked {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.status.decrypted {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.status.authorized {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status.tampered {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* FLOW */
+
+.flow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.flow-step {
+    flex: 1;
+    padding: 16px 8px;
+    background: #eff6ff;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.arrow {
+    color: #2563eb;
+    font-size: 20px;
+}
+
+/* SERVER */
+
+.server-box {
+    background: #0f172a;
+    color: #22c55e;
+    padding: 17px;
+    border-radius: 10px;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.server-title {
+    color: white;
+    font-family: Arial;
+    margin-bottom: 10px;
+}
+
+/* MESSAGES */
+
+.message {
+    display: none;
+    padding: 11px;
+    border-radius: 8px;
+    margin-top: 12px;
+    font-size: 13px;
+}
+
+.success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* AUDIT */
+
+.audit {
+    border-left: 4px solid #2563eb;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+    background: #f8fafc;
+    border-radius: 6px;
+}
+
+.audit.success-log {
+    border-left-color: #16a34a;
+}
+
+.audit.error-log {
+    border-left-color: #dc2626;
+}
+
+.audit small {
+    color: #64748b;
+}
+
+/* INFO */
+
+.info-box {
+    background: #eff6ff;
+    border-left: 4px solid #2563eb;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.warning-box {
+    background: #fff7ed;
+    border-left: 4px solid #ea580c;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.success-box {
+    background: #f0fdf4;
+    border-left: 4px solid #16a34a;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.button-row .action-btn {
+    margin-top: 0;
+}
+
+.small-text {
+    color: #64748b;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px) {
+    .stats {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width:700px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .logout {
+        position: static;
+        margin-top: 20px;
+    }
+
+    .main {
+        margin-left: 0;
+        padding: 18px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .flow {
+        flex-direction: column;
+    }
+
+    .arrow {
+        transform: rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     LOGIN
+===================================================== -->
+
+<div id="loginPage" class="login-page">
+
+    <div class="login-box">
+
+        <div class="logo">
+            <h1>SecureMed</h1>
+            <p>Cryptographic Medical Record System</p>
+        </div>
+
+        <h2>Secure Login</h2>
+
+        <label>Username</label>
+
+        <input
+            type="text"
+            id="username"
+            placeholder="Enter username"
+        >
+
+        <label>Password</label>
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter password"
+        >
+
+        <button
+            class="primary-btn"
+            onclick="login()"
+        >
+            Login
+        </button>
+
+        <div id="loginMessage" class="message error"></div>
+
+    </div>
+</div>
+
+
+<!-- =====================================================
+     APPLICATION
+===================================================== -->
+
+<div id="app" class="app">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            Secure<span>Med</span>
+        </div>
+
+        <div class="nav-item active">
+            Dashboard
+        </div>
+
+        <div class="nav-item">
+            Medical Records
+        </div>
+
+        <div class="nav-item">
+            Encryption
+        </div>
+
+        <div class="nav-item">
+            Access Control
+        </div>
+
+        <div class="nav-item">
+            Audit Log
+        </div>
+
+        <div class="logout" onclick="logout()">
+            Logout
+        </div>
+
+    </aside>
+
+
+    <main class="main">
+
+        <div class="topbar">
+
+            <div>
+                <h1 id="dashboardTitle">
+                    Dashboard
+                </h1>
+
+                <p>
+                    Secure medical record management
+                </p>
+            </div>
+
+            <div id="userBadge" class="user-badge">
+                USER
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PATIENT DASHBOARD
+        ================================================== -->
+
+        <div id="patientDashboard">
+
+            <div class="stats">
+
+                <div class="stat-card">
+                    <h4>Patient ID</h4>
+                    <div
+                        id="patientIdDisplay"
+                        class="number blue"
+                    >
+                        P001
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Encryption</h4>
+                    <div class="number purple">
+                        AES-256-GCM
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Records Shared</h4>
+                    <div
+                        id="sharedCount"
+                        class="number green"
+                    >
+                        0
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Access Revoked</h4>
+                    <div
+                        id="revokedCount"
+                        class="number red"
+                    >
+                        0
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="grid">
+
+                <div>
+
+                    <!-- CREATE RECORD -->
+
+                    <div class="card">
+
+                        <h2>
+                            Create Medical Record
+                        </h2>
+
+                        <label>Patient ID</label>
+
+                        <input
+                            id="patientId"
+                            readonly
+                        >
+
+                        <label>Patient Name</label>
+
+                        <input
+                            id="patientName"
+                            placeholder="Enter dummy patient name"
+                        >
+
+                        <label>Diagnosis</label>
+
+                        <input
+                            id="diagnosis"
+                            placeholder="Example: Common cold"
+                        >
+
+                        <label>Prescription</label>
+
+                        <textarea
+                            id="prescription"
+                            placeholder="Enter dummy prescription"
+                        ></textarea>
+
+                        <label>Medical History</label>
+
+                        <textarea
+                            id="history"
+                            placeholder="Enter dummy medical history"
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- SECURE SHARING -->
+
+                    <div class="card">
+
+                        <h2>
+                            Secure Sharing
+                        </h2>
+
+                        <label>
+                            Select Doctor
+                        </label>
+
+                        <select id="doctorId">
+
+                            <option value="D001">
+                                D001 - Doctor 1
+                            </option>
+
+                            <option value="D002">
+                                D002 - Doctor 2
+                            </option>
+
+                            <option value="D003">
+                                D003 - Doctor 3
+                            </option>
+
+                        </select>
+
+                        <label>
+                            Secret Passphrase
+                        </label>
+
+                        <input
+                            type="password"
+                            id="patientPassphrase"
+                            placeholder="Create a secret passphrase"
+                        >
+
+                        <button
+                            class="action-btn"
+                            onclick="encryptAndShare()"
+                        >
+                            Encrypt and Share
+                        </button>
+
+                        <div
+                            id="patientMessage"
+                            class="message"
+                        ></div>
+
+                    </div>
+
+
+                    <!-- PATIENT RECORDS -->
+
+                    <div class="card">
+
+                        <h2>
+                            My Shared Records
+                        </h2>
+
+                        <div id="patientRecords">
+                            No records shared yet.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <!-- SECURITY -->
+
+                    <div class="card">
+
+                        <h2>
+                            Security Architecture
+                        </h2>
+
+                        <div class="security-grid">
+
+                            <div class="security-item">
+                                <strong>AES-256</strong>
+                                <span>
+                                    256-bit encryption
+                                </span>
+                            </div>
+
+                            <div class="security-item">
+                                <strong>GCM Mode</strong>
+                                <span>
+                                    Authentication tag
+                                </span>
+                            </div>
+
+                            <div class="security-item">
+                                <strong>Random IV</strong>
+                                <span>
+                                    Unique encryption IV
+                                </span>
+                            </div>
+
+                            <div class="security-item">
+                                <strong>PBKDF2</strong>
+                                <span>
+                                    SHA-256 key derivation
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACCESS CONTROL -->
+
+                    <div class="card">
+
+                        <h2>
+                            Access Control
+                        </h2>
+
+                        <div class="info-box">
+
+                            A record can only be accessed
+                            by the doctor selected by
+                            the patient.
+
+                        </div>
+
+                        <br>
+
+                        <div class="success-box">
+
+                            Revoke Access can immediately
+                            disable the selected doctor's
+                            access to a shared record.
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ENCRYPTION FLOW -->
+
+                    <div class="card">
+
+                        <h2>
+                            Encryption Flow
+                        </h2>
+
+                        <div class="flow">
+
+                            <div class="flow-step">
+                                Medical Record
+                            </div>
+
+                            <div class="arrow">
+                                >
+                            </div>
+
+                            <div class="flow-step">
+                                AES-256-GCM
+                            </div>
+
+                            <div class="arrow">
+                                >
+                            </div>
+
+                            <div class="flow-step">
+                                Ciphertext
+                            </div>
+
+                            <div class="arrow">
+                                >
+                            </div>
+
+                            <div class="flow-step">
+                                Secure Storage
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SERVER -->
+
+                    <div class="card">
+
+                        <h2>
+                            Secure Server Simulation
+                        </h2>
+
+                        <div class="server-box">
+
+                            <div class="server-title">
+                                ENCRYPTED STORAGE
+                            </div>
+
+                            <div id="serverOutput">
+                                No encrypted record stored.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TAMPER DEMO -->
+
+            <div class="card">
+
+                <h2>
+                    Tamper Detection Demonstration
+                </h2>
+
+                <div class="warning-box">
+
+                    This demonstration intentionally
+                    modifies the encrypted ciphertext.
+                    AES-GCM should detect the modification
+                    and reject decryption.
+
+                </div>
+
+                <button
+                    class="action-btn danger-btn"
+                    onclick="tamperSelectedRecord()"
+                >
+                    Simulate Data Tampering
+                </button>
+
+                <div
+                    id="tamperMessage"
+                    class="message"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             DOCTOR DASHBOARD
+        ================================================== -->
+
+        <div id="doctorDashboard" class="hidden">
+
+            <div class="stats">
+
+                <div class="stat-card">
+                    <h4>Doctor ID</h4>
+                    <div
+                        id="doctorIdDisplay"
+                        class="number blue"
+                    >
+                        D001
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Access Control</h4>
+                    <div class="number green">
+                        ACTIVE
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Available Records</h4>
+                    <div
+                        id="doctorRecordCount"
+                        class="number purple"
+                    >
+                        0
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Failed Attempts</h4>
+                    <div
+                        id="failedAttempts"
+                        class="number red"
+                    >
+                        0
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- RECORDS -->
+
+            <div class="card">
+
+                <h2>
+                    Records Shared With Me
+                </h2>
+
+                <div id="doctorRecords">
+                    No records shared with you.
+                </div>
+
+            </div>
+
+
+            <!-- DECRYPT -->
+
+            <div class="card">
+
+                <h2>
+                    Secure Decryption
+                </h2>
+
+                <div class="info-box">
+
+                    Select an authorized record,
+                    then enter the secret passphrase
+                    created by the patient.
+
+                </div>
+
+                <label>
+                    Secret Passphrase
+                </label>
+
+                <input
+                    type="password"
+                    id="doctorPassphrase"
+                    placeholder="Enter patient passphrase"
+                >
+
+                <div class="button-row">
+
+                    <button
+                        class="action-btn"
+                        onclick="decryptSelectedRecord()"
+                    >
+                        Decrypt Record
+                    </button>
+
+                    <button
+                        class="action-btn secondary-btn"
+                        onclick="clearDecryptedRecord()"
+                    >
+                        Clear
+                    </button>
+
+                </div>
+
+                <div
+                    id="doctorMessage"
+                    class="message"
+                ></div>
+
+            </div>
+
+
+            <!-- DECRYPTED -->
+
+            <div
+                id="decryptedSection"
+                class="card hidden"
+            >
+
+                <h2>
+                    Decrypted Medical Record
+                </h2>
+
+                <div class="record-box">
+
+                    <p>
+                        <strong>Patient ID:</strong>
+                        <span id="decPatientId"></span>
+                    </p>
+
+                    <p>
+                        <strong>Patient Name:</strong>
+                        <span id="decPatientName"></span>
+                    </p>
+
+                    <p>
+                        <strong>Diagnosis:</strong>
+                        <span id="decDiagnosis"></span>
+                    </p>
+
+                    <p>
+                        <strong>Prescription:</strong>
+                        <span id="decPrescription"></span>
+                    </p>
+
+                    <p>
+                        <strong>Medical History:</strong>
+                        <span id="decHistory"></span>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- DOWNLOAD -->
+
+            <div class="card">
+
+                <h2>
+                    Encrypted File
+                </h2>
+
+                <div class="info-box">
+
+                    Only encrypted data can be
+                    downloaded. The plaintext medical
+                    record and passphrase are never
+                    included in the downloaded file.
+
+                </div>
+
+                <button
+                    class="action-btn"
+                    onclick="downloadSelectedRecord()"
+                >
+                    Download Encrypted Record
+                </button>
+
+                <div
+                    id="downloadMessage"
+                    class="message"
+                ></div>
+
+            </div>
+
+
+            <!-- DECRYPTION FLOW -->
+
+            <div class="card">
+
+                <h2>
+                    Decryption Flow
+                </h2>
+
+                <div class="flow">
+
+                    <div class="flow-step">
+                        Ciphertext
+                    </div>
+
+                    <div class="arrow">
+                        >
+                    </div>
+
+                    <div class="flow-step">
+                        Passphrase
+                    </div>
+
+                    <div class="arrow">
+                        >
+                    </div>
+
+                    <div class="flow-step">
+                        AES-256-GCM
+                    </div>
+
+                    <div class="arrow">
+                        >
+                    </div>
+
+                    <div class="flow-step">
+                        Medical Record
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             AUDIT LOG
+        ================================================== -->
+
+        <div class="card">
+
+            <h2>
+                Security Audit Log
+            </h2>
+
+            <div
+                id="auditLog"
+            >
+                <div class="audit">
+                    <strong>
+                        System initialized
+                    </strong>
+                    <br>
+                    <small>
+                        SecureMed Stage 7 started
+                    </small>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div
+            style="
+            text-align:center;
+            color:#64748b;
+            font-size:12px;
+            margin-top:25px;
+            "
+        >
+            SecureMed - Cryptography PBL Project
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   USER DATABASE
+   Hidden from login screen
+===================================================== */
+
+const users = {
+
+    patient1: {
+        username: "patient1",
+        password: "1234",
+        role: "patient",
+        id: "P001"
+    },
+
+    patient2: {
+        username: "patient2",
+        password: "2345",
+        role: "patient",
+        id: "P002"
+    },
+
+    patient3: {
+        username: "patient3",
+        password: "3456",
+        role: "patient",
+        id: "P003"
+    },
+
+    patient4: {
+        username: "patient4",
+        password: "4567",
+        role: "patient",
+        id: "P004"
+    },
+
+    doctor1: {
+        username: "doctor1",
+        password: "5678",
+        role: "doctor",
+        id: "D001"
+    },
+
+    doctor2: {
+        username: "doctor2",
+        password: "6789",
+        role: "doctor",
+        id: "D002"
+    },
+
+    doctor3: {
+        username: "doctor3",
+        password: "7890",
+        role: "doctor",
+        id: "D003"
+    }
+
+};
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let currentUser = null;
+
+let sharedRecords = [];
+
+let selectedRecordId = null;
+
+let failedAttemptCount = 0;
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+function login() {
+
+    const username =
+        document.getElementById("username").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const message =
+        document.getElementById("loginMessage");
+
+    let loggedInUser = null;
+
+    for (const key in users) {
+
+        const user = users[key];
+
+        if (
+            username === user.username &&
+            password === user.password
+        ) {
+            loggedInUser = user;
+            break;
+        }
+    }
+
+    if (!loggedInUser) {
+
+        message.style.display = "block";
+
+        message.textContent =
+            "Invalid username or password.";
+
+        addAudit(
+            "Failed login attempt for username: " +
+            username,
+            false
+        );
+
+        return;
+    }
+
+    currentUser = loggedInUser;
+
+    message.style.display = "none";
+
+    openDashboard();
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+function openDashboard() {
+
+    document.getElementById("loginPage").style.display = "none";
+
+    document.getElementById("app").style.display = "block";
+
+    document.getElementById("userBadge").textContent =
+        currentUser.role.toUpperCase() +
+        " - " +
+        currentUser.id;
+
+    if (currentUser.role === "patient") {
+
+        document
+            .getElementById("patientDashboard")
+            .classList.remove("hidden");
+
+        document
+            .getElementById("doctorDashboard")
+            .classList.add("hidden");
+
+        document.getElementById("dashboardTitle").textContent =
+            "Patient Dashboard";
+
+        document.getElementById("patientId").value =
+            currentUser.id;
+
+        document.getElementById("patientIdDisplay").textContent =
+            currentUser.id;
+
+        renderPatientRecords();
+
+    } else {
+
+        document
+            .getElementById("patientDashboard")
+            .classList.add("hidden");
+
+        document
+            .getElementById("doctorDashboard")
+            .classList.remove("hidden");
+
+        document.getElementById("dashboardTitle").textContent =
+            "Doctor Dashboard";
+
+        document.getElementById("doctorIdDisplay").textContent =
+            currentUser.id;
+
+        renderDoctorRecords();
+    }
+
+    addAudit(
+        currentUser.role.toUpperCase() +
+        " " +
+        currentUser.id +
+        " logged into the system.",
+        true
+    );
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+    if (currentUser) {
+
+        addAudit(
+            currentUser.role.toUpperCase() +
+            " " +
+            currentUser.id +
+            " logged out.",
+            true
+        );
+    }
+
+    currentUser = null;
+
+    selectedRecordId = null;
+
+    document.getElementById("app").style.display = "none";
+
+    document.getElementById("loginPage").style.display = "flex";
+
+    document.getElementById("username").value = "";
+
+    document.getElementById("password").value = "";
+
+    document.getElementById("doctorPassphrase").value = "";
+
+    document.getElementById("decryptedSection")
+        .classList.add("hidden");
+}
+
+
+/* =====================================================
+   ARRAY BUFFER -> BASE64
+===================================================== */
+
+function arrayBufferToBase64(buffer) {
+
+    let binary = "";
+
+    const bytes = new Uint8Array(buffer);
+
+    for (let i = 0; i < bytes.length; i++) {
+
+        binary += String.fromCharCode(bytes[i]);
+    }
+
+    return btoa(binary);
+}
+
+
+/* =====================================================
+   BASE64 -> ARRAY BUFFER
+===================================================== */
+
+function base64ToArrayBuffer(base64) {
+
+    const binary = atob(base64);
+
+    const bytes = new Uint8Array(binary.length);
+
+    for (let i = 0; i < binary.length; i++) {
+
+        bytes[i] = binary.charCodeAt(i);
+    }
+
+    return bytes.buffer;
+}
+
+
+/* =====================================================
+   PBKDF2 KEY DERIVATION
+===================================================== */
+
+async function deriveKey(passphrase, salt) {
+
+    const encoder = new TextEncoder();
+
+    const passwordKey =
+        await crypto.subtle.importKey(
+            "raw",
+            encoder.encode(passphrase),
+            {
+                name: "PBKDF2"
+            },
+            false,
+            ["deriveKey"]
+        );
+
+    return crypto.subtle.deriveKey(
+
+        {
+            name: "PBKDF2",
+            salt: salt,
+            iterations: 100000,
+            hash: "SHA-256"
+        },
+
+        passwordKey,
+
+        {
+            name: "AES-GCM",
+            length: 256
+        },
+
+        false,
+
+        [
+            "encrypt",
+            "decrypt"
+        ]
+    );
+}
+
+
+/* =====================================================
+   AES ENCRYPTION
+===================================================== */
+
+async function encryptRecord(record, passphrase) {
+
+    const encoder = new TextEncoder();
+
+    const salt =
+        crypto.getRandomValues(
+            new Uint8Array(16)
+        );
+
+    const iv =
+        crypto.getRandomValues(
+            new Uint8Array(12)
+        );
+
+    const key =
+        await deriveKey(
+            passphrase,
+            salt
+        );
+
+    const data =
+        encoder.encode(
+            JSON.stringify(record)
+        );
+
+    const encrypted =
+        await crypto.subtle.encrypt(
+
+            {
+                name: "AES-GCM",
+                iv: iv
+            },
+
+            key,
+
+            data
+        );
+
+    return {
+
+        ciphertext:
+            arrayBufferToBase64(encrypted),
+
+        salt:
+            arrayBufferToBase64(salt),
+
+        iv:
+            arrayBufferToBase64(iv)
+    };
+}
+
+
+/* =====================================================
+   AES DECRYPTION
+===================================================== */
+
+async function decryptRecord(
+    packageData,
+    passphrase
+) {
+
+    const salt =
+        new Uint8Array(
+            base64ToArrayBuffer(
+                packageData.salt
+            )
+        );
+
+    const iv =
+        new Uint8Array(
+            base64ToArrayBuffer(
+                packageData.iv
+            )
+        );
+
+    const encrypted =
+        base64ToArrayBuffer(
+            packageData.ciphertext
+        );
+
+    const key =
+        await deriveKey(
+            passphrase,
+            salt
+        );
+
+    const decrypted =
+        await crypto.subtle.decrypt(
+
+            {
+                name: "AES-GCM",
+                iv: iv
+            },
+
+            key,
+
+            encrypted
+        );
+
+    const decoder = new TextDecoder();
+
+    return JSON.parse(
+        decoder.decode(decrypted)
+    );
+}
+
+
+/* =====================================================
+   ENCRYPT AND SHARE
+===================================================== */
+
+async function encryptAndShare() {
+
+    if (!currentUser ||
+        currentUser.role !== "patient") {
+        return;
+    }
+
+    const patientName =
+        document
+        .getElementById("patientName")
+        .value.trim();
+
+    const diagnosis =
+        document
+        .getElementById("diagnosis")
+        .value.trim();
+
+    const prescription =
+        document
+        .getElementById("prescription")
+        .value.trim();
+
+    const history =
+        document
+        .getElementById("history")
+        .value.trim();
+
+    const doctorId =
+        document
+        .getElementById("doctorId")
+        .value;
+
+    const passphrase =
+        document
+        .getElementById("patientPassphrase")
+        .value;
+
+    if (
+        !patientName ||
+        !diagnosis ||
+        !prescription ||
+        !history ||
+        !passphrase
+    ) {
+
+        showMessage(
+            "patientMessage",
+            "Please fill all fields.",
+            false
+        );
+
+        return;
+    }
+
+    const record = {
+
+        patientId: currentUser.id,
+
+        patientName: patientName,
+
+        diagnosis: diagnosis,
+
+        prescription: prescription,
+
+        history: history
+    };
+
+    try {
+
+        const encrypted =
+            await encryptRecord(
+                record,
+                passphrase
+            );
+
+        const recordId =
+            typeof crypto.randomUUID === "function"
+            ?
+            crypto.randomUUID()
+            :
+            Date.now() +
+            "-" +
+            Math.random();
+
+        const packageData = {
+
+            recordId: recordId,
+
+            patientId: currentUser.id,
+
+            sharedWithDoctorId: doctorId,
+
+            ciphertext: encrypted.ciphertext,
+
+            salt: encrypted.salt,
+
+            iv: encrypted.iv,
+
+            sharedAt:
+                new Date().toLocaleString(),
+
+            status: "Shared",
+
+            accessRevoked: false,
+
+            tampered: false
+        };
+
+        sharedRecords.push(packageData);
+
+        selectedRecordId = recordId;
+
+        updatePatientStats();
+
+        updateServer(packageData);
+
+        renderPatientRecords();
+
+        showMessage(
+            "patientMessage",
+            "Record encrypted and shared with Doctor " +
+            doctorId + ".",
+            true
+        );
+
+        addAudit(
+            "Patient " +
+            currentUser.id +
+            " encrypted a medical record using AES-256-GCM and shared it with Doctor " +
+            doctorId +
+            ".",
+            true
+        );
+
+        document.getElementById("patientName").value = "";
+        document.getElementById("diagnosis").value = "";
+        document.getElementById("prescription").value = "";
+        document.getElementById("history").value = "";
+        document.getElementById("patientPassphrase").value = "";
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            "patientMessage",
+            "Encryption failed.",
+            false
+        );
+    }
+}
+
+
+/* =====================================================
+   PATIENT STATISTICS
+===================================================== */
+
+function updatePatientStats() {
+
+    if (!currentUser) return;
+
+    const records =
+        sharedRecords.filter(
+            record =>
+                record.patientId ===
+                currentUser.id
+        );
+
+    const revoked =
+        records.filter(
+            record =>
+                record.accessRevoked
+        ).length;
+
+    document.getElementById("sharedCount").textContent =
+        records.length;
+
+    document.getElementById("revokedCount").textContent =
+        revoked;
+}
+
+
+/* =====================================================
+   RENDER PATIENT RECORDS
+===================================================== */
+
+function renderPatientRecords() {
+
+    const container =
+        document.getElementById(
+            "patientRecords"
+        );
+
+    const records =
+        sharedRecords.filter(
+            record =>
+                record.patientId ===
+                currentUser.id
+        );
+
+    updatePatientStats();
+
+    if (records.length === 0) {
+
+        container.innerHTML =
+            "No records shared yet.";
+
+        return;
+    }
+
+    container.innerHTML = "";
+
+    records.forEach(record => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "record-box";
+
+        let statusHTML;
+
+        if (record.accessRevoked) {
+
+            statusHTML =
+                '<span class="status revoked">' +
+                'ACCESS REVOKED' +
+                '</span>';
+
+        } else if (record.tampered) {
+
+            statusHTML =
+                '<span class="status tampered">' +
+                'TAMPERED' +
+                '</span>';
+
+        } else if (record.status === "Decrypted") {
+
+            statusHTML =
+                '<span class="status decrypted">' +
+                'DECRYPTED' +
+                '</span>';
+
+        } else {
+
+            statusHTML =
+                '<span class="status shared">' +
+                'SHARED' +
+                '</span>';
+        }
+
+        div.innerHTML =
+
+            "<p>" +
+            "<strong>Record ID:</strong> " +
+            escapeHTML(
+                record.recordId.substring(0, 12)
+            ) +
+            "</p>" +
+
+            "<p>" +
+            "<strong>Patient ID:</strong> " +
+            escapeHTML(record.patientId) +
+            "</p>" +
+
+            "<p>" +
+            "<strong>Doctor:</strong> " +
+            escapeHTML(
+                record.sharedWithDoctorId
+            ) +
+            "</p>" +
+
+            "<p>" +
+            "<strong>Shared At:</strong> " +
+            escapeHTML(record.sharedAt) +
+            "</p>" +
+
+            "<p>" +
+            "<strong>Status:</strong> " +
+            statusHTML +
+            "</p>";
+
+        if (!record.accessRevoked) {
+
+            div.innerHTML +=
+
+                '<div class="button-row">' +
+
+                '<button class="action-btn danger-btn" ' +
+                'onclick="revokeAccess(\'' +
+                record.recordId +
+                '\')">' +
+                'Revoke Access' +
+                '</button>' +
+
+                '<button class="action-btn secondary-btn" ' +
+                'onclick="selectPatientRecord(\'' +
+                record.recordId +
+                '\')">' +
+                'Select' +
+                '</button>' +
+
+                '</div>';
+        }
+
+        container.appendChild(div);
+    });
+}
+
+
+/* =====================================================
+   SELECT PATIENT RECORD
+===================================================== */
+
+function selectPatientRecord(recordId) {
+
+    const record =
+        sharedRecords.find(
+            r => r.recordId === recordId
+        );
+
+    if (!record) return;
+
+    selectedRecordId = recordId;
+
+    showMessage(
+        "tamperMessage",
+        "Record selected for security testing.",
+        true
+    );
+}
+
+
+/* =====================================================
+   REVOKE ACCESS
+===================================================== */
+
+function revokeAccess(recordId) {
+
+    const record =
+        sharedRecords.find(
+            r => r.recordId === recordId
+        );
+
+    if (!record) return;
+
+    if (record.patientId !== currentUser.id) {
+
+        addAudit(
+            "Unauthorized revoke attempt.",
+            false
+        );
+
+        return;
+    }
+
+    if (record.accessRevoked) {
+
+        showMessage(
+            "patientMessage",
+            "Access is already revoked.",
+            false
+        );
+
+        return;
+    }
+
+    const confirmed =
+        confirm(
+            "Revoke Doctor " +
+            record.sharedWithDoctorId +
+            " access to this record?"
+        );
+
+    if (!confirmed) return;
+
+    record.accessRevoked = true;
+
+    record.status = "Revoked";
+
+    if (selectedRecordId === recordId) {
+
+        selectedRecordId = null;
+    }
+
+    renderPatientRecords();
+
+    updatePatientStats();
+
+    showMessage(
+        "patientMessage",
+        "Access successfully revoked.",
+        true
+    );
+
+    addAudit(
+        "Patient " +
+        currentUser.id +
+        " revoked access for Doctor " +
+        record.sharedWithDoctorId +
+        " on record " +
+        recordId.substring(0, 12) +
+        ".",
+        true
+    );
+}
+
+
+/* =====================================================
+   RENDER DOCTOR RECORDS
+===================================================== */
+
+function renderDoctorRecords() {
+
+    const container =
+        document.getElementById(
+            "doctorRecords"
+        );
+
+    const records =
+        sharedRecords.filter(
+            record =>
+                record.sharedWithDoctorId ===
+                currentUser.id &&
+                record.accessRevoked === false
+        );
+
+    document.getElementById(
+        "doctorRecordCount"
+    ).textContent = records.length;
+
+    if (records.length === 0) {
+
+        container.innerHTML =
+            "No authorized records available.";
+
+        return;
+    }
+
+    container.innerHTML = "";
+
+    records.forEach(record => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "record-box";
+
+        let status =
+            record.tampered
+            ?
+            '<span class="status tampered">' +
+            'TAMPERED' +
+            '</span>'
+            :
+            '<span class="status authorized">' +
+            'AUTHORIZED' +
+            '</span>';
+
+        div.innerHTML =
+
+            "<p>" +
+            "<strong>Record ID:</strong> " +
+            escapeHTML(
+                record.recordId.substring(0, 12)
+            ) +
+            "</p>" +
+
+            "<p>" +
+            "<strong>Patient ID:</strong> " +
+            escapeHTML(record.patientId) +
+            "</p>" +
+
+            "<p>" +
+            "<strong>Shared At:</strong> " +
+            escapeHTML(record.sharedAt) +
+            "</p>" +
+
+            "<p>" +
+            "<strong>Access:</strong> " +
+            status +
+            "</p>" +
+
+            '<div class="button-row">' +
+
+            '<button class="action-btn" ' +
+            'onclick="selectRecord(\'' +
+            record.recordId +
+            '\')">' +
+            'Select Record' +
+            '</button>' +
+
+            '<button class="action-btn secondary-btn" ' +
+            'onclick="downloadSelectedSpecific(\'' +
+            record.recordId +
+            '\')">' +
+            'Download' +
+            '</button>' +
+
+            '</div>';
+
+        container.appendChild(div);
+    });
+}
+
+
+/* =====================================================
+   SELECT DOCTOR RECORD
+===================================================== */
+
+function selectRecord(recordId) {
+
+    const record =
+        sharedRecords.find(
+            r => r.recordId === recordId
+        );
+
+    if (!record) return;
+
+    if (
+        record.sharedWithDoctorId !==
+        currentUser.id
+    ) {
+
+        showMessage(
+            "doctorMessage",
+            "Access denied.",
+            false
+        );
+
+        addAudit(
+            "Unauthorized access attempt by Doctor " +
+            currentUser.id +
+            ".",
+            false
+        );
+
+        return;
+    }
+
+    if (record.accessRevoked) {
+
+        showMessage(
+            "doctorMessage",
+            "Access has been revoked by the patient.",
+            false
+        );
+
+        addAudit(
+            "Doctor " +
+            currentUser.id +
+            " attempted to access a revoked record.",
+            false
+        );
+
+        return;
+    }
+
+    selectedRecordId = recordId;
+
+    showMessage(
+        "doctorMessage",
+        "Record selected. Enter the passphrase.",
+        true
+    );
+
+    addAudit(
+        "Doctor " +
+        currentUser.id +
+        " selected authorized record " +
+        recordId.substring(0, 12) +
+        ".",
+        true
+    );
+}
+
+
+/* =====================================================
+   DOCTOR DECRYPTION
+===================================================== */
+
+async function decryptSelectedRecord() {
+
+    if (!selectedRecordId) {
+
+        showMessage(
+            "doctorMessage",
+            "Please select a record first.",
+            false
+        );
+
+        return;
+    }
+
+    const passphrase =
+        document
+        .getElementById("doctorPassphrase")
+        .value;
+
+    if (!passphrase) {
+
+        showMessage(
+            "doctorMessage",
+            "Please enter the passphrase.",
+            false
+        );
+
+        return;
+    }
+
+    const record =
+        sharedRecords.find(
+            r =>
+                r.recordId ===
+                selectedRecordId
+        );
+
+    if (!record) {
+
+        showMessage(
+            "doctorMessage",
+            "Record not found.",
+            false
+        );
+
+        return;
+    }
+
+    if (
+        record.sharedWithDoctorId !==
+        currentUser.id
+    ) {
+
+        failedAttemptCount++;
+
+        updateFailedAttempts();
+
+        showMessage(
+            "doctorMessage",
+            "Access denied.",
+            false
+        );
+
+        return;
+    }
+
+    if (record.accessRevoked) {
+
+        failedAttemptCount++;
+
+        updateFailedAttempts();
+
+        showMessage(
+            "doctorMessage",
+            "Access has been revoked by the patient.",
+            false
+        );
+
+        addAudit(
+            "Doctor " +
+            currentUser.id +
+            " attempted to decrypt a revoked record.",
+            false
+        );
+
+        return;
+    }
+
+    try {
+
+        const decrypted =
+            await decryptRecord(
+                record,
+                passphrase
+            );
+
+        document.getElementById(
+            "decPatientId"
+        ).textContent =
+            decrypted.patientId;
+
+        document.getElementById(
+            "decPatientName"
+        ).textContent =
+            decrypted.patientName;
+
+        document.getElementById(
+            "decDiagnosis"
+        ).textContent =
+            decrypted.diagnosis;
+
+        document.getElementById(
+            "decPrescription"
+        ).textContent =
+            decrypted.prescription;
+
+        document.getElementById(
+            "decHistory"
+        ).textContent =
+            decrypted.history;
+
+        document
+            .getElementById("decryptedSection")
+            .classList
+            .remove("hidden");
+
+        record.status = "Decrypted";
+
+        showMessage(
+            "doctorMessage",
+            "Decryption successful. Data integrity verified.",
+            true
+        );
+
+        addAudit(
+            "Doctor " +
+            currentUser.id +
+            " successfully decrypted Patient " +
+            decrypted.patientId +
+            "'s record. AES-GCM integrity check passed.",
+            true
+        );
+
+    } catch (error) {
+
+        failedAttemptCount++;
+
+        updateFailedAttempts();
+
+        document
+            .getElementById("decryptedSection")
+            .classList
+            .add("hidden");
+
+        showMessage(
+            "doctorMessage",
+            "Decryption failed. Wrong passphrase or data has been tampered with.",
+            false
+        );
+
+        addAudit(
+            "Decryption failed for Doctor " +
+            currentUser.id +
+            ". Possible wrong password or tampering detected.",
+            false
+        );
+    }
+}
+
+
+/* =====================================================
+   CLEAR DECRYPTED DATA
+===================================================== */
+
+function clearDecryptedRecord() {
+
+    document
+        .getElementById("decryptedSection")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("doctorPassphrase")
+        .value = "";
+
+    document
+        .getElementById("doctorMessage")
+        .style.display = "none";
+
+    addAudit(
+        "Decrypted medical information cleared from the screen.",
+        true
+    );
+}
+
+
+/* =====================================================
+   FAILED ATTEMPTS
+===================================================== */
+
+function updateFailedAttempts() {
+
+    document.getElementById(
+        "failedAttempts"
+    ).textContent =
+        failedAttemptCount;
+}
+
+
+/* =====================================================
+   DOWNLOAD ENCRYPTED RECORD
+===================================================== */
+
+function downloadSelectedRecord() {
+
+    if (!selectedRecordId) {
+
+        showMessage(
+            "downloadMessage",
+            "Select a record first.",
+            false
+        );
+
+        return;
+    }
+
+    downloadRecordById(
+        selectedRecordId
+    );
+}
+
+
+/* =====================================================
+   DOWNLOAD SPECIFIC RECORD
+===================================================== */
+
+function downloadSelectedSpecific(recordId) {
+
+    selectedRecordId = recordId;
+
+    downloadRecordById(recordId);
+}
+
+
+/* =====================================================
+   DOWNLOAD FUNCTION
+===================================================== */
+
+function downloadRecordById(recordId) {
+
+    const record =
+        sharedRecords.find(
+            r => r.recordId === recordId
+        );
+
+    if (!record) {
+
+        showMessage(
+            "downloadMessage",
+            "Record not found.",
+            false
+        );
+
+        return;
+    }
+
+    if (
+        currentUser.role === "doctor" &&
+        (
+            record.sharedWithDoctorId !==
+            currentUser.id ||
+            record.accessRevoked
+        )
+    ) {
+
+        showMessage(
+            "downloadMessage",
+            "Download denied.",
+            false
+        );
+
+        return;
+    }
+
+    const encryptedFile = {
+
+        application:
+            "SecureMed",
+
+        version:
+            "Stage 7",
+
+        recordId:
+            record.recordId,
+
+        patientId:
+            record.patientId,
+
+        authorizedDoctor:
+            record.sharedWithDoctorId,
+
+        encryptedData:
+            record.ciphertext,
+
+        salt:
+            record.salt,
+
+        iv:
+            record.iv,
+
+        status:
+            "Encrypted",
+
+        note:
+            "This file contains encrypted ciphertext only. No plaintext medical record or passphrase is stored."
+    };
+
+    const json =
+        JSON.stringify(
+            encryptedFile,
+            null,
+            4
+        );
+
+    const blob =
+        new Blob(
+            [json],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "SecureMed_" +
+        record.patientId +
+        "_" +
+        record.recordId.substring(0,8) +
+        ".json";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+
+    if (
+        document.getElementById(
+            "downloadMessage"
+        )
+    ) {
+
+        showMessage(
+            "downloadMessage",
+            "Encrypted record downloaded successfully.",
+            true
+        );
+    }
+
+    addAudit(
+        currentUser.role.toUpperCase() +
+        " " +
+        currentUser.id +
+        " downloaded encrypted record " +
+        record.recordId.substring(0,12) +
+        ".",
+        true
+    );
+}
+
+
+/* =====================================================
+   TAMPER DETECTION
+===================================================== */
+
+function tamperSelectedRecord() {
+
+    if (!selectedRecordId) {
+
+        showMessage(
+            "tamperMessage",
+            "First select a record.",
+            false
+        );
+
+        return;
+    }
+
+    const record =
+        sharedRecords.find(
+            r =>
+                r.recordId ===
+                selectedRecordId
+        );
+
+    if (!record) {
+
+        showMessage(
+            "tamperMessage",
+            "Record not found.",
+            false
+        );
+
+        return;
+    }
+
+    if (record.accessRevoked) {
+
+        showMessage(
+            "tamperMessage",
+            "Cannot tamper with a revoked record.",
+            false
+        );
+
+        return;
+    }
+
+    /* MODIFY ONE CHARACTER OF CIPHERTEXT */
+
+    const ciphertext =
+        record.ciphertext;
+
+    const position =
+        Math.floor(
+            ciphertext.length / 2
+        );
+
+    const oldChar =
+        ciphertext.charAt(position);
+
+    const newChar =
+        oldChar === "A"
+        ? "B"
+        : "A";
+
+    record.ciphertext =
+        ciphertext.substring(
+            0,
+            position
+        ) +
+
+        newChar +
+
+        ciphertext.substring(
+            position + 1
+        );
+
+    record.tampered = true;
+
+    showMessage(
+        "tamperMessage",
+        "Ciphertext modified. Now try decrypting it from the Doctor dashboard. AES-GCM should detect the tampering.",
+        true
+    );
+
+    updateServer(record);
+
+    renderPatientRecords();
+
+    addAudit(
+        "Tamper simulation performed on record " +
+        record.recordId.substring(0,12) +
+        ". Ciphertext was intentionally modified.",
+        false
+    );
+
+    alert(
+        "Tampering simulated successfully.\n\n" +
+        "Now login as the authorized doctor and try to decrypt the record.\n\n" +
+        "AES-256-GCM should reject the modified ciphertext."
+    );
+}
+
+
+/* =====================================================
+   SERVER SIMULATION
+===================================================== */
+
+function updateServer(record) {
+
+    document.getElementById(
+        "serverOutput"
+    ).innerHTML =
+
+        "Record ID: " +
+        escapeHTML(
+            record.recordId
+        ) +
+
+        "<br><br>" +
+
+        "Patient ID: " +
+        escapeHTML(
+            record.patientId
+        ) +
+
+        "<br><br>" +
+
+        "Authorized Doctor: " +
+        escapeHTML(
+            record.sharedWithDoctorId
+        ) +
+
+        "<br><br>" +
+
+        "Ciphertext:<br>" +
+        escapeHTML(
+            record.ciphertext.substring(
+                0,
+                180
+            )
+        ) +
+        "...<br><br>" +
+
+        "Salt:<br>" +
+        escapeHTML(
+            record.salt
+        ) +
+
+        "<br><br>" +
+
+        "IV:<br>" +
+        escapeHTML(
+            record.iv
+        ) +
+
+        "<br><br>" +
+
+        "Status: " +
+        (
+            record.tampered
+            ?
+            "TAMPERING DETECTED DURING DECRYPTION"
+            :
+            "ENCRYPTED"
+        );
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+function showMessage(
+    elementId,
+    text,
+    success
+) {
+
+    const element =
+        document.getElementById(
+            elementId
+        );
+
+    if (!element) return;
+
+    element.style.display = "block";
+
+    element.textContent = text;
+
+    element.className =
+        "message " +
+        (
+            success
+            ?
+            "success"
+            :
+            "error"
+        );
+}
+
+
+/* =====================================================
+   AUDIT LOG
+===================================================== */
+
+function addAudit(
+    text,
+    success = true
+) {
+
+    const audit =
+        document.getElementById(
+            "auditLog"
+        );
+
+    if (!audit) return;
+
+    const item =
+        document.createElement(
+            "div"
+        );
+
+    item.className =
+        success
+        ?
+        "audit success-log"
+        :
+        "audit error-log";
+
+    item.innerHTML =
+
+        "<strong>" +
+        escapeHTML(text) +
+        "</strong>" +
+
+        "<br>" +
+
+        "<small>" +
+        new Date().toLocaleString() +
+        "</small>";
+
+    audit.prepend(item);
+}
+
+
+/* =====================================================
+   HTML ESCAPING
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+}
+
+</script>
+
+</body>
+</html>
